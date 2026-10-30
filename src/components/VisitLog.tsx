@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { PLACES, PLACE_MAP } from '../data/places'
+import { usePlaces } from '../store/PlacesContext'
 import { useTrip } from '../store/TripContext'
 import { Empty, shortAddress, Tag } from './ui'
 import VisitForm from './VisitForm'
@@ -12,6 +12,7 @@ interface Props {
 
 export default function VisitLog({ onFocus, onOpen, onGoExplore }: Props) {
   const { data } = useTrip()
+  const { places: PLACES, placeMap: PLACE_MAP } = usePlaces()
   const [editId, setEditId] = useState<string | null>(null)
 
   const visits = Object.values(data.visits)

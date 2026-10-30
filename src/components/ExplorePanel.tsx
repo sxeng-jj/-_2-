@@ -1,4 +1,4 @@
-import { CATEGORIES } from '../data/places'
+import { usePlaces } from '../store/PlacesContext'
 import { useTrip } from '../store/TripContext'
 import type { Place } from '../types'
 import PixabayPhoto from './PixabayPhoto'
@@ -23,13 +23,14 @@ interface Props {
 
 export default function ExplorePanel({ filters, onFilters, places, total, selectedId, onOpen }: Props) {
   const { data } = useTrip()
+  const { categories: CATEGORIES } = usePlaces()
   const set = (patch: Partial<Filters>) => onFilters({ ...filters, ...patch })
   const chip = (on: boolean) =>
     `rounded-full border px-3 py-1 text-sm transition ${on ? 'border-sea-600 bg-sea-600 text-white' : 'border-sand-200 bg-white text-basalt-800 hover:border-sea-500'}`
 
   return (
     <div className="flex h-full flex-col">
-      <PixabayPhoto queries={['제주도 풍경', 'jeju island']} className="h-28 shrink-0">
+      <PixabayPhoto queries={['제주도 풍경', 'jeju island']} className="hidden h-28 shrink-0 lg:block">
         <div className="flex h-full flex-col justify-end p-4 text-white">
           <div className="text-xs font-semibold tracking-widest opacity-90">JEJU IT-GIL</div>
           <div className="text-lg font-extrabold leading-tight drop-shadow">제주의 역사와 문화를 걷는 길</div>

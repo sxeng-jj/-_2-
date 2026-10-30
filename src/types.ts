@@ -39,6 +39,8 @@ export interface Visit {
 export interface TripData {
   /** 찜한 순서 = 여행 코스 순서 */
   course: string[]
+  /** 새 하루가 시작되는 장소 id (코스 첫 장소는 제외). 비어 있으면 하루 코스 */
+  breaks: string[]
   visits: Record<string, Visit>
 }
 

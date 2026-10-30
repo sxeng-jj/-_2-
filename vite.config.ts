@@ -4,17 +4,23 @@ import tailwindcss from '@tailwindcss/vite'
 import { viteSingleFile } from 'vite-plugin-singlefile'
 
 /**
- * 개발 서버(npm run dev)에서도 /api/pixabay 를 쓸 수 있게 Vercel 함수(api/pixabay.ts)를 그대로 연결한다.
- * 배포 환경에서는 Vercel 이 이 함수를 직접 실행한다.
+ * 개발 서버(npm run dev)에서도 /api/* 를 쓸 수 있게 Vercel 함수(api/*.ts)를 그대로 연결한다.
+ * 배포 환경에서는 Vercel 이 이 함수들을 직접 실행한다.
  */
+const API_ROUTES = ['pixabay', 'places']
+const SERVER_ENV = ['PIXABAY_API_KEY', 'JEJU_CULTURE_INFO_KEY', 'JEJU_CULTURE_LOCATION_KEY']
+
 function devApi(env: Record<string, string>): Plugin {
   return {
     name: 'dev-api',
     configureServer(server) {
-      server.middlewares.use('/api/pixabay', async (req, res) => {
-        if (env.PIXABAY_API_KEY) process.env.PIXABAY_API_KEY = env.PIXABAY_API_KEY
+      // .env.local 의 서버 전용 키를 함수가 process.env 로 읽을 수 있게 넘긴다 (브라우저로는 나가지 않는다)
+      for (const k of SERVER_ENV) if (env[k]) process.env[k] = env[k]
+      server.middlewares.use(async (req, res, next) => {
         const url = new URL(req.url ?? '', 'http://localhost')
-        const mod = await server.ssrLoadModule('/api/pixabay.ts')
+        const name = API_ROUTES.find((r) => url.pathname === `/api/${r}`)
+        if (!name) return next()
+        const mod = await server.ssrLoadModule(`/api/${name}.ts`)
         const out = {
           status(code: number) {
             res.statusCode = code

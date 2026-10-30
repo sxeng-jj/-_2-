@@ -9,7 +9,7 @@ export interface TripStorage {
   save(data: TripData): void
 }
 
-const EMPTY: TripData = { course: [], visits: {} }
+const EMPTY: TripData = { course: [], breaks: [], visits: {} }
 
 /** localStorage 키 하나에 사용자 데이터를 저장하는 어댑터 */
 export function createLocalStorage(key: string): TripStorage {
@@ -17,9 +17,9 @@ export function createLocalStorage(key: string): TripStorage {
     load() {
       try {
         const parsed = JSON.parse(localStorage.getItem(key) ?? 'null') as Partial<TripData> | null
-        return { course: parsed?.course ?? [], visits: parsed?.visits ?? {} }
+        return { course: parsed?.course ?? [], breaks: parsed?.breaks ?? [], visits: parsed?.visits ?? {} }
       } catch {
-        return { ...EMPTY, course: [], visits: {} }
+        return { ...EMPTY, course: [], breaks: [], visits: {} }
       }
     },
     save(data) {

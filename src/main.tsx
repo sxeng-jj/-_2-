@@ -5,6 +5,7 @@ import './index.css'
 import App from './App'
 import { localTripStorage, userStorage } from './lib/storage'
 import { AuthProvider, useAuth } from './store/AuthContext'
+import { PlacesProvider } from './store/PlacesContext'
 import { TripProvider } from './store/TripContext'
 
 /** 로그인한 계정마다 별도 저장소를 쓰고, 계정이 바뀌면 상태를 새로 불러온다 */
@@ -23,7 +24,9 @@ function TripGate() {
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AuthProvider>
-      <TripGate />
+      <PlacesProvider>
+        <TripGate />
+      </PlacesProvider>
     </AuthProvider>
   </StrictMode>,
 )
