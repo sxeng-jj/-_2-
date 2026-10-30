@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Pretendard", "Malgun Gothic", "Apple SD Gothic Neo", system-ui, sans-serif;
+  /* 제주 바다 */
+  --color-sea-50: #eaf6f6;
+  --color-sea-100: #cfe9ea;
+  --color-sea-300: #7cc4c9;
+  --color-sea-500: #1b8a93;
+  --color-sea-600: #0e6f78;
+  --color-sea-700: #0b5961;
+  --color-sea-900: #0a2f35;
+  /* 감귤 */
+  --color-citrus-100: #fde8cf;
+  --color-citrus-400: #f6a23a;
+  --color-citrus-500: #f28c28;
+  --color-citrus-600: #d9731a;
+  /* 유채 */
+  --color-canola-300: #f8dd6b;
+  --color-canola-400: #f5c518;
+  /* 한라산 숲 */
+  --color-moss-100: #dcefe4;
+  --color-moss-500: #3f8f64;
+  --color-moss-600: #2f7d55;
+  /* 현무암 / 모래 */
+  --color-basalt-800: #2b3138;
+  --color-basalt-500: #6b7280;
+  --color-sand-50: #fbf9f3;
+  --color-sand-100: #f4efe2;
+  --color-sand-200: #e8e0cc;
+}
+
+html, body, #root { height: 100%; }
+body { margin: 0; background: var(--color-sand-50); color: var(--color-basalt-800); font-family: var(--font-sans); }
+
+/* Leaflet 팝업 */
+.leaflet-popup-content-wrapper { border-radius: 14px; }
+.leaflet-popup-content { margin: 12px 14px; }
+.jg-pop button { cursor: pointer; }
