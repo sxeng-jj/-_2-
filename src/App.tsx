@@ -34,7 +34,7 @@ function Logo() {
 
 export default function App() {
   const { data } = useTrip()
-  const { user, logOut } = useAuth()
+  const { user, logOut, configured } = useAuth()
   const [authMode, setAuthMode] = useState<'login' | 'signup' | null>(null)
   const [tab, setTab] = useState<Tab>('explore')
   const [filters, setFilters] = useState<Filters>({ query: '', category: '', region: '' })
@@ -86,7 +86,8 @@ export default function App() {
             </button>
           ))}
         </nav>
-        <div className="flex items-center gap-2 text-sm">
+        {/* Supabase 환경변수가 없는 빌드(더블클릭 실행용)에서는 로그인 UI를 숨긴다 */}
+        <div className={`items-center gap-2 text-sm ${configured ? 'flex' : 'hidden'}`}>
           {user ? (
             <>
               <span className="rounded-full bg-sea-50 px-3 py-1.5 font-semibold text-sea-700">🌴 {user.nickname}님</span>
